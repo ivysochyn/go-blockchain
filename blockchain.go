@@ -36,6 +36,10 @@ func (bc *Blockchain) Print() {
     fmt.Printf("%s\n\n", strings.Repeat("*", 25))
 }
 
+func (bc *Blockchain) LastBlock() *Block {
+    return bc.chain[len(bc.chain) - 1]
+}
+
 /* --------------------------------------------------- */
 
 type Block struct {
@@ -55,7 +59,6 @@ func NewBlock(nonce int, previousHash [32]byte) *Block {
 
 func (b *Block) Hash() [32]byte{
     m, _ := json.Marshal(b)
-    fmt.Println(string(m))
     return sha256.Sum256([]byte(m))
 }
 
@@ -87,14 +90,14 @@ func init() {
 }
 
 func main() {
-    block := &Block{nonce: 1}
-    fmt.Printf("%x\n", block.Hash())
-    /*
     blockChain := NewBlockchain()
     blockChain.Print()
-    blockChain.CreateBlock(5, "hash 1")
+
+    previousHash := blockChain.LastBlock().Hash()
+    blockChain.CreateBlock(5, previousHash)
     blockChain.Print()
-    blockChain.CreateBlock(2, "hash 2")
+
+    previousHash = blockChain.LastBlock().Hash()
+    blockChain.CreateBlock(2, previousHash)
     blockChain.Print()
-    */
 }
