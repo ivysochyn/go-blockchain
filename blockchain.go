@@ -4,7 +4,34 @@ import (
     "fmt"
     "time"
     "log"
+    "strings"
 )
+
+type Blockchain struct {
+    transactionPool []string
+    chain           []*Block
+}
+
+func NewBlockchain() *Blockchain {
+    bc := new(Blockchain)
+    bc.CreateBlock(0, "Init hash")
+    return bc
+}
+
+func (bc *Blockchain) CreateBlock(nonce int, previousHash string) *Block {
+    b := NewBlock(nonce, previousHash)
+    bc.chain = append(bc.chain, b)
+    return b
+}
+
+func (bc *Blockchain) Print() {
+    for i, block := range bc.chain {
+        fmt.Printf("%s Chain %d %s\n", strings.Repeat("=", 25),
+                    i, strings.Repeat("=", 25))
+        block.Print()
+    }
+    fmt.Printf("%s\n\n", strings.Repeat("*", 25))
+}
 
 /* --------------------------------------------------- */
 
@@ -37,6 +64,10 @@ func init() {
 }
 
 func main() {
-    b := NewBlock(0, "init hash")
-    b.Print()
+    blockChain := NewBlockchain()
+    blockChain.Print()
+    blockChain.CreateBlock(5, "hash 1")
+    blockChain.Print()
+    blockChain.CreateBlock(2, "hash 2")
+    blockChain.Print()
 }
