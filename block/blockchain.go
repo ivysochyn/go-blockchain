@@ -1,4 +1,4 @@
-package main
+package block 
 
 import (
     "fmt"
@@ -185,30 +185,4 @@ func (t *Transaction) MarshalJSON() ([]byte, error) {
         RecipientBlockchainAddress:     t.recipientBlockchainAddress,
         Value:                          t.value,
     })
-}
-
-/* --------------------------------------------------- */
-
-func init() {
-    log.SetPrefix("Blockchain: ")
-}
-
-func main() {
-    myBlockchainAddress := "my_blockchain_address"
-
-    blockChain := NewBlockchain(myBlockchainAddress)
-    blockChain.Print()
-
-    blockChain.AddTransaction("A", "B", float32(1))
-    blockChain.Mining()
-    blockChain.Print()
-
-    blockChain.AddTransaction("C", "D", float32(2))
-    blockChain.AddTransaction("X", "Y", float32(3))
-    blockChain.Mining()
-    blockChain.Print()
-
-    fmt.Printf("C: %.1f\n", blockChain.CalculateTotalAmount("C"))
-    fmt.Printf("D: %.1f\n", blockChain.CalculateTotalAmount("D"))
-    fmt.Printf("ME: %.1f\n", blockChain.CalculateTotalAmount("my_blockchain_address"))
 }
