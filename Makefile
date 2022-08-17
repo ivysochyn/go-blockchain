@@ -1,5 +1,5 @@
 BINARY_NAME=main.out
-SOURCE_NAME=blockchain.go
+SOURCE_NAME=main.go
 
 .SILENT: all
 all: build
